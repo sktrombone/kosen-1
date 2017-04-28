@@ -1,3 +1,7 @@
+//3j19 sakamoto 
+//kadai2-3
+
+//unexecutable
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,16 +30,6 @@ void printimg(unsigned char d[]){
 		}
 		if(i%8==7 ){
 			printf("\n");
-		}
-	}
-}
-
-void compress(char data[512],char pattern[64][64]){
-	for(int i=0;i<64;i++){
-		for(int j=0;j<64;j++){
-//			pattern[]data[i][j];
-			data[64/8][j]|=pattern[i/8][8-i%8];
-			
 		}
 	}
 }
