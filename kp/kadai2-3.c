@@ -11,13 +11,24 @@ void expand(char data[512],char pattern[64][64]){
 	for(int i=0;i<512;i++){
 		for(int j=7;j>=0;j--){
 			if(data[i]&(1<<j)){
-				pattern[i/8][(i%8+1)*8-j]=0;
-			}else{
 				pattern[i/8][(i%8+1)*8-j]=1;
+			}else{
+				pattern[i/8][(i%8+1)*8-j]=0;
 			}
 		}
 	}
 }
+
+void compress(char data[512],char pattern[64][64]){
+	for(int i=0;i<512;i++){
+		for(int j=7;j>=0;j--){
+			if(pattern[i/8][(i%8+1)*8-j]){
+				data[i]|=(1<<j);
+			}
+		}
+	}
+}
+
 
 void printimg(unsigned char d[]){
 	for(int i=0;i<512;i++){
@@ -34,8 +45,11 @@ void printimg(unsigned char d[]){
 	}
 }
 
+
 int main(int argc,char **argv){
 	unsigned char d[MEM];
+	unsigned char d1[MEM];
+	
 	char p[64][64];
 	FILE *fp;
 	char fname[128];
@@ -50,7 +64,11 @@ int main(int argc,char **argv){
 		}
 		for(int i=0;i<20;i++){
 			fread(d,512,1,fp);
-			printimg(d);
+//			printimg(d);
+			expand(d,p);
+			compress(d1,p);
+			printimg(d1);
+
 			getchar();
 		}
 		fclose(fp);
