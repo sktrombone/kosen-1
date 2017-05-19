@@ -1,6 +1,6 @@
 
 //3j19 sakamoto 
-//³‹K‰»
+//???K??
 //unfinished
 
 
@@ -49,24 +49,23 @@ void outlines(char pattern[64][64]){
 				pattern[i-1][j+1] && pattern[i  ][j+1] && pattern[i+1][j+1] ){
 				pattern[i][j]=2;
 			}
-
-			if(pattern[i][j]==1)	printf("*");
-			else					printf(".");
-		
 		}
-		printf("\n");
+	}
+	for(int i=1;i<64-1;i++){
+		for(int j=1;j<64-1;j++){
+			if(pattern[i][j]==2){
+				pattern[i][j]=0;
+			}
+		}
 	}
 }
 
-//(x >= 0)?  x : -x
-//#define min(x,y) ((x>y)? x:y)
-//
 void printPattern(char p[64][64],int x,int y){
 	for(int i=0;i<64;i++){
 		for(int j=0;j<64;j++){
 			for(int k=0;k<x;k++){
 				
-				if(p[i][j]){
+				if(p[i][j]==1){
 					printf("*");
 				}else{
 					printf(".");
@@ -76,25 +75,11 @@ void printPattern(char p[64][64],int x,int y){
 		printf("\n");
 	}
 }
-void printPattern2(char p[64][64],int x,int y,int x1,int y1){
-	for(int i=y;i<y1;i++){
-		for(int j=x;j<x1;j++){
-			for(int k=0;
-			if(p[i][j]){
-				printf("*");
-			}else{
-				printf(".");
-			}
-		}
-		printf("\n");
-	}
-}
-
-#define H 64*3
 
 void normalize(char p[64][64]){
 	int x0=64,y0=64,x1=0,y1=0,h,w;
-//	const int H=64*3;
+	double W=64,H=64;
+	char p1[64][64];
 	for(int i=0;i<64;i++){
 		for(int j=0;j<64;j++){
 			if(p[i][j]==1){
@@ -103,15 +88,22 @@ void normalize(char p[64][64]){
 				x1=max(x1,j);
 				y1=max(y1,i);
 			}
-			
 		}
 	}
+	x0-=1;
+	y0-=1;
+	x1+=1;
+	y1+=1;
 	w=x1-x0;
 	h=y1-y0;
 	printf("%d \nx0: %d y0:%d \nx1: %d y1:%d\n h:%d w:%d\n",__LINE__,x0,y0,x1,y1,w,h);
-	printPattern2(p,x0,y0,x1,y1);
-//	printPattern(p,2,2);
-
+	
+	for(int i=0;i<64;i++){
+		for(int j=0;j<64;j++){
+			p1[i][j]=p[(int)(i*(w/W)+x0+0.5)][(int)(j*(h/H)+y0+0.5)];
+		}
+	}
+	printPattern(p1,1,1);
 }
 
 int main(int argc,char **argv){
@@ -130,9 +122,10 @@ int main(int argc,char **argv){
 		}
 		for(int i=0;i<20;i++){
 			fread(d,512,1,fp);
-//			printimg(d);
+
 			expand(d,p);
 			outlines(p);
+			printPattern(p,1,1);
 			normalize(p);
 			
 			getchar();
