@@ -4,6 +4,7 @@
 int cnt=0;
 #define swap(a,b) do{int tmp;tmp=a;a=b;b=tmp;cnt++;}while(0);
 #define debug printf("%d %s \n",__LINE__,__func__); 
+//#define print(a,b) fprint(a,b,"out.txt")
 
 void print(int n[],int size){
 	for(int i=0;i<size;i++){
@@ -11,7 +12,6 @@ void print(int n[],int size){
 	}
 	printf("\n");
 }
-
 
 void insert(int n[],int size){
 	int tmp,pos=1;
@@ -55,40 +55,64 @@ void bubble(int n[],int size){
 				swap(n[i],n[i+1])
 			}
 		}
-		print(n,size);
 		pos++;
 	}
+	print(n,size);
+}
+
+void fprint(int n[],int size,int order,char *fname){
+	debug;
+	FILE *fp;
+	fp=fopen(fname,"w");
+		debug;
+	if(fp==NULL){
+		printf("file open failed");
+		exit(1);
+	}
+		debug;
+	for(int i=0;i<size;i++){
+		fprintf(fp,"%3d\n",n[i]);
+	}
+	fclose(fp);
 }
 
 int main(){
 	int *n;
-	char str[128];
-	int size=0,lines=0;
+	char str[128],fname[128]="num2.txt",fout[128],flong;
+	int size=0,lines=0,order;
 	FILE *fp;
-	fp=fopen("num.txt","r");
+	printf("please input file name (default is num2.txt)\n");
+	scanf("%s",fname);
+	flong=sizeof(fname)/sizeof(char);
+	sprintf(fout,"%s.out",fname);
+	printf("input output file name %s %s\n",fname,fout);
+	printf("up(0) or dowm(1) (default is down)\n");
+	scanf("%d",&order);
+
+	fp=fopen(fname,"r");
 	if(fp==NULL){
 		printf("can't open the file");
 		exit(1);
 	}
 	while ( fgets(str,80,fp) ) lines++;
 	rewind(fp);
-	printf("%d\n",lines);
+	printf("lines :%d\n",lines);
 	n=(int *)malloc(sizeof(int)*lines);
-	while(fgets(str,80,fp)){
-		n[size]=atoi(str);
-		size++;
-	}
+	do {int i=0;while(fscanf(fp,"%d",&(n[i++]))!=EOF); }while(0);
 	printf("%d\n",size);
 	printf("choose (B)ubble,(C)hoice,(I)nsert\n");
 	scanf("%s",str);
 	if(str[0]=='B'){
-		choice(n,size);
+		bubble(n,lines);
 	}else if(str[0]=='C'){
-		choice(n,size);
+		choice(n,lines);
 	}else if(str[0]=='I'){
-		insert(n,size);
+		insert(n,lines);
 	}else{
 		printf("unknown command");
 	}
+	printf("swap counter: %d",cnt);
+	
+	fprint(n,lines,order,fout);
 	fclose(fp);
 }
