@@ -90,5 +90,6 @@ int main(){
 	}else{
 		printf("unknown command");
 	}
+	printf("swap counter: %d",cnt);
 	fclose(fp);
 }
