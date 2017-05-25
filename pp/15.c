@@ -61,18 +61,22 @@ void bubble(int n[],int size){
 }
 
 void fprint(int n[],int size,int order,char *fname){
-	debug;
 	FILE *fp;
 	fp=fopen(fname,"w");
-		debug;
 	if(fp==NULL){
 		printf("file open failed");
 		exit(1);
 	}
-		debug;
-	for(int i=0;i<size;i++){
-		fprintf(fp,"%3d\n",n[i]);
+	if(order==0){
+		for(int i=0;i<size;i++){
+			fprintf(fp,"%3d\n",n[i]);
+		}
+	}else if(order==1){
+		for(int i=size-1;i;i--){
+			fprintf(fp,"%3d\n",n[i]);
+		}
 	}
+
 	fclose(fp);
 }
 
