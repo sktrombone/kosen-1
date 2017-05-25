@@ -14,37 +14,31 @@ void print(int num[]){
 }
 
 int bubble1(int n[],int size){
-	int pos=0,last;
-	for(int j=0;j<size;j++){
-		for(int i=0;i<size-pos;i++){
-			if(n[i]>n[i+1]){
-				swap(n[i],n[i+1]);
-				last=pos;
-			}
+//	debug ("size :%d\n ",size);
+	int last;
+	for(int i=0;i<size;i++){
+		if(n[i]>n[i+1]){
+			swap(n[i],n[i+1]);
+			last=i;
 		}
-		pos++;
 	}
+	debug ("%d\n",last);
 	return last;
 }
 
 int bubble2(int n[],int size){
-	int pos=size,last;
-	for(int j=size;j>0;j--){
-		for(int i=size-pos;i>0;i--){
-			if(n[i]>n[i+1]){
-				swap(n[i],n[i+1]);
-				last=i;
-			}
+	int last=0;
+	for(int i=size;i>0;i--){
+		if(n[i-1]>n[i]){
+			swap(n[i],n[i-1]);
+			last=i;
 		}
-		pos++;
 	}
+	debug ("%d\n",last);
 	return last;
 }
 
 int main(){
-	
-
-	
 	char str[128];
 	int num[N],size=0;//={6,41,52,68,37,23,76,18};
 	FILE *fp;
@@ -59,12 +53,18 @@ int main(){
 	}
 	
 	int left=0,right=size-1;//,last;
+	print(num);
 	while(1){
-//		print(num);
 //		debug ("right :%d left:%d\n ",right,left);
-		left+=bubble1((num+left),right-left);		
-		right-=bubble2((num+left),right-left);
-		if(right-left<=1) break;
+//		print(num);
+		right=left+bubble1((num+left),right-left);
+		debug ("right :%d left:%d\n ",right,left);
+		print(num);
+		left=left+bubble2((num+left),right-left);
+		debug ("right :%d left:%d\n ",right,left);
+
+		if(left== right) break;
+
 	}
 	print(num);
 }
