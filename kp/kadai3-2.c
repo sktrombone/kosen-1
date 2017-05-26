@@ -97,15 +97,15 @@ void smooth(char pattern[64][64]){
 	for(int i=1;i<64-1;i++){
 		for(int j=1;j<64-1;j++){
 			//mask2
-/*
+
 			if(	pattern[i-1][j-1] &&!pattern[i  ][j-1] && pattern[i+1][j-1] &&
 				pattern[i-1][j  ] &&					  pattern[i+1][j  ] &&
 				pattern[i-1][j+1] && pattern[i  ][j+1] && pattern[i+1][j+1] ){
 				pattern[i][j-1]=1;
 			}
-			if(  pattern[i-1][j-1]==0 && pattern[i  ][j-1] && pattern[i+1][j-1] &&
+			if(  pattern[i-1][j-1] && pattern[i  ][j-1] && pattern[i+1][j-1] &&
 				!pattern[i-1][j  ] &&						  pattern[i+1][j  ] &&
-				 pattern[i-1][j+1]==0 && pattern[i  ][j+1] && pattern[i+1][j+1] ){
+				 pattern[i-1][j+1] && pattern[i  ][j+1] && pattern[i+1][j+1] ){
 				pattern[i-1][j]=1;
 			}
 			if(	pattern[i-1][j-1] && pattern[i  ][j-1] && pattern[i+1][j-1] &&
@@ -118,7 +118,6 @@ void smooth(char pattern[64][64]){
 				 pattern[i-1][j+1] && pattern[i  ][j+1] &&  pattern[i+1][j+1] ){
 				pattern[i+1][j]=1;
 			}
-*/
 			//mask1
 			if(	!pattern[i-1][j-1] && pattern[i  ][j-1] && !pattern[i+1][j-1] &&
 				pattern[i-1][j  ] &&					  pattern[i+1][j  ] &&
