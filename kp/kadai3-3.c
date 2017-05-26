@@ -1,24 +1,11 @@
-
-//3j19 sakamoto 
-//???K??
-//unfinished
-
-
 #include <stdio.h>
-#include <stdlib.h>
-//3j19 sakamoto 
-//???K??
-//unfinished
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
+#include <Stdlib.h>
 #define MEM (1024*32)
 #undef min
 #undef max
 #define min(x,y) ((x<y)? x:y)
 #define max(x,y) ((x>y)? x:y)
+#define debug printf("%d %s ",__LINE__,__func__); printf
 
 void expand(char data[512],char pattern[64][64]){
 	for(int i=0;i<512;i++){
@@ -69,10 +56,8 @@ void outlines(char pattern[64][64]){
 
 void printPattern(char p[64][64],int x,int y){
 	for(int i=0;i<64;i++){
-		printf("%-2d",i);
 		for(int j=0;j<64;j++){
 			for(int k=0;k<x;k++){
-				
 				if(p[i][j]==1){
 					printf("*");
 				}else{
@@ -85,6 +70,19 @@ void printPattern(char p[64][64],int x,int y){
 }
 
 
+void printPattern2(char p[64][64],int x0,int x1,int y0,int y1){
+	debug ("\n");
+	for(int i=y0;i<y1;i++){
+		for(int j=x0;j<x1;j++){
+			if(p[i][j]==1){
+				printf("*");
+			}else{
+				printf(".");
+			}
+		}
+		printf("\n");
+	}
+}
 void normalize(char p[64][64]){
 	int x0=64,y0=64,x1=0,y1=0,h,w;
 	double W=64,H=64;
@@ -99,18 +97,15 @@ void normalize(char p[64][64]){
 			}
 		}
 	}
-//	x0-=1;
-	y0-=1;
 	x1+=1;
 	y1+=1;
 	w=x1-x0;
 	h=y1-y0;
-	printf("%d \nx0: %d y0:%d \nx1: %d y1:%d\n w:%d h:%d\n",__LINE__,x0,y0,x1,y1,w,h);
-	
+	printf("%d \nx0: %d y0:%d \nx1: %d y1:%d\n h:%d w:%d\n",__LINE__,x0,y0,x1,y1,w,h);
+	printPattern2(p,x0,x1,y0,y1);
 	for(int i=0;i<64;i++){
 		for(int j=0;j<64;j++){
-			p1[i][j]=p[(int)(i*(w/W)+x0+0.5)][(int)(j*(h/H)+y0+0.5)];
-//			p1[i][j]=p[(int)(i*(h/H)+x0+0.5)][(int)(j*(w/W)+y0+0.5)];
+			p1[i][j]=p[(int)(i*(h/H)+y0+0.5)][(int)(j*(w/W)+x0+0.5)];
 		}
 	}
 	printPattern(p1,1,1);
@@ -134,7 +129,7 @@ int main(int argc,char **argv){
 			fread(d,512,1,fp);
 
 			expand(d,p);
-//			outlines(p);
+			outlines(p);
 			printPattern(p,1,1);
 			normalize(p);
 			
